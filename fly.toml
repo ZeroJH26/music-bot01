@@ -1,0 +1,11 @@
+app = "my-music-bot"
+primary_region = "ams"
+
+[build]
+
+[env]
+  DOWNLOADS_DIR = "/tmp/downloads"
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "256mb"
