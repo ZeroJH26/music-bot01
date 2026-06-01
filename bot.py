@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import logging
+import os
 import shutil
 
 from telegram import Update
@@ -134,8 +135,21 @@ def main():
     app.add_handler(CommandHandler("help", cmd_help))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
 
-    logger.info("Bot started. Polling…")
-    app.run_polling(allowed_updates=Update.ALL_TYPES)
+    webhook_url = os.getenv("WEBHOOK_URL", "").rstrip("/")
+    port = int(os.getenv("PORT", "8080"))
+
+    if webhook_url:
+        logger.info(f"Webhook mode: {webhook_url}/webhook on port {port}")
+        app.run_webhook(
+            listen="0.0.0.0",
+            port=port,
+            url_path="webhook",
+            webhook_url=f"{webhook_url}/webhook",
+            drop_pending_updates=True,
+        )
+    else:
+        logger.info("Polling mode")
+        app.run_polling(drop_pending_updates=True, allowed_updates=Update.ALL_TYPES)
 
 
 if __name__ == "__main__":
