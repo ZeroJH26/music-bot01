@@ -9,7 +9,7 @@ import yt_dlp
 
 logger = logging.getLogger(__name__)
 
-MAX_FILESIZE_BYTES = 50 * 1024 * 1024
+MAX_FILESIZE_BYTES = 50 * 1024 * 1024  # 50 MB — Telegram bot limit
 
 
 class MusicDownloader:
@@ -29,9 +29,7 @@ class MusicDownloader:
                     "preferredquality": self.quality,
                 },
                 {"key": "FFmpegMetadata"},
-                {"key": "EmbedThumbnail"},
             ],
-            "writethumbnail": True,
             "quiet": True,
             "no_warnings": True,
             "noplaylist": True,
