@@ -30,6 +30,12 @@ class MusicDownloader:
                 },
                 {"key": "FFmpegMetadata"},
             ],
+            # Use Android client to bypass YouTube bot detection on datacenter IPs
+            "extractor_args": {
+                "youtube": {
+                    "player_client": ["android"],
+                }
+            },
             "quiet": True,
             "no_warnings": True,
             "noplaylist": True,
